@@ -9,10 +9,12 @@ import argparse
 import sys, os
 from aucc.core.handler import DeviceHandler
 import time
-from aucc.core.colors import (get_mono_color_vector,
-                         get_h_alt_color_vector,
-                         get_v_alt_color_vector,
-                         _colors_available)
+from aucc.core.colors import (
+    get_mono_color_vector,
+    get_h_alt_color_vector,
+    get_v_alt_color_vector,
+    _colors_available,
+)
 
 
 light_style = {
@@ -20,16 +22,11 @@ light_style = {
     'reactive': (0x08, 0x02, 0x04, 0x05, 0x24, 0x08, 0x01, 0x00),
     'raindrop': (0x08, 0x02, 0x0A, 0x05, 0x24, 0x08, 0x00, 0x00),
     'marquee': (0x08, 0x02, 0x09, 0x05, 0x24, 0x08, 0x00, 0x00),
-    'aurora': (0x08, 0x02, 0x0E, 0x05, 0x24, 0x08, 0x00, 0x00)
+    'aurora': (0x08, 0x02, 0x0E, 0x05, 0x24, 0x08, 0x00, 0x00),
 }
 
 # keybpoard brightness have 4 variations 0x08,0x16,0x24,0x32
-brightness_map = {
-    1: 0x08,
-    2: 0x16,
-    3: 0x24,
-    4: 0x32
-}
+brightness_map = {1: 0x08, 2: 0x16, 3: 0x24, 4: 0x32}
 
 
 class ControlCenter(DeviceHandler):
@@ -46,8 +43,9 @@ class ControlCenter(DeviceHandler):
     def adjust_brightness(self, brightness=None):
         if brightness:
             self.brightness = brightness
-            self.ctrl_write(0x08, 0x02, 0x33, 0x00,
-                            brightness_map[self.brightness], 0x00, 0x00, 0x00)
+            self.ctrl_write(
+                0x08, 0x02, 0x33, 0x00, brightness_map[self.brightness], 0x00, 0x00, 0x00
+            )
         else:
             self.adjust_brightness(4)
 
@@ -83,22 +81,21 @@ def main():
     if not os.geteuid() == 0:
         elevate()
 
-    control = ControlCenter(vendor_id=0x048d, product_id=0xce00)
+    control = ControlCenter(vendor_id=0x048D, product_id=0xCE00)
 
     parser = argparse.ArgumentParser(
         description="Supply at least one of the options [-c|-H|-V|-s|-d]. "
         "Colors available: "
-        "[red|green|blue|teal|pink|purple|white|yellow|orange]")
+        "[red|green|blue|teal|pink|purple|white|yellow|orange]"
+    )
     parser.add_argument('-c', '--color', help='Single color')
     parser.add_argument('-b', '--brightness', help='1, 2, 3 or 4')
-    parser.add_argument('-H', '--h-alt', nargs=2,
-                        help='Horizontal alternating colors')
-    parser.add_argument('-V', '--v-alt', nargs=2,
-                        help='Vertical alternating colors')
-    parser.add_argument('-s', '--style',
-                        help='one of (rainbow, reactive, raindrop, marquee, aurora)')
-    parser.add_argument('-d', '--disable', action='store_true',
-                        help='turn keyboard backlight off'),
+    parser.add_argument('-H', '--h-alt', nargs=2, help='Horizontal alternating colors')
+    parser.add_argument('-V', '--v-alt', nargs=2, help='Vertical alternating colors')
+    parser.add_argument(
+        '-s', '--style', help='one of (rainbow, reactive, raindrop, marquee, aurora)'
+    )
+    parser.add_argument('-d', '--disable', action='store_true', help='turn keyboard backlight off'),
 
     parsed = parser.parse_args()
     if parsed.disable:

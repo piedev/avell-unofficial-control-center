@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "aucc"
+version = "1.0.2"
+description = "A Project to provide a driver and interface to control keyboard rgb led of ITE 8291 like Avell laptops"
+authors = ["Kamil Podbielski <freeniac@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+pyusb = "=1.0.2"
+elevate = "=0.1.3"
+
+[tool.poetry.dev-dependencies]
+black = "=19.3b0"
+flake8 = "^3.7"
+
+[tool.poetry.scripts]
+aucc = "aucc.__main__:main"
+
+[tool.black]
+line-length = 100
+skip-string-normalization = true
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

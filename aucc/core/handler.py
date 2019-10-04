@@ -37,10 +37,8 @@ class Device(object):
     def _get_endpoint(self, intf, ep_type):
 
         ep = usb.util.find_descriptor(
-            intf,
-            custom_match=lambda e:
-            usb.util.endpoint_direction(e.bEndpointAddress) ==
-            ep_type)
+            intf, custom_match=lambda e: usb.util.endpoint_direction(e.bEndpointAddress) == ep_type
+        )
 
         return ep
 
@@ -55,7 +53,8 @@ class DeviceHandler(Device):
 
     def ctrl_write(self, *payload):
         self._device.ctrl_transfer(
-            self.bmRequestType, self.bRequest, self.wValue, self.wIndex, payload)
+            self.bmRequestType, self.bRequest, self.wValue, self.wIndex, payload
+        )
 
     def bulk_write(self, times=1, payload=None):
         for _ in range(times):
