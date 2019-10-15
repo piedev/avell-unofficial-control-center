@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aucc"
-version = "1.0.2"
+version = "1.0.3"
 description = "A Project to provide a driver and interface to control keyboard rgb led of ITE 8291 like Avell laptops"
 authors = ["Kamil Podbielski <freeniac@gmail.com>"]
 license = "MIT"
